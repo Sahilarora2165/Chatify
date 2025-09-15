@@ -1,0 +1,54 @@
+# ========== Spring Boot / Java ==========
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Maven / Gradle
+target/
+build/
+out/
+*.iml
+
+# Eclipse / IntelliJ / VSCode
+.idea/
+*.ipr
+*.iws
+*.iml
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Application properties that contain secrets
+application.properties
+application.yml
+*.env
+
+# Temporary files
+*.tmp
+*.swp
+
+# Spring Boot specific
+spring.log
+logs/
+hs_err_pid*
+
+# Node / frontend (if any in same repo)
+node_modules/
+dist/
+
+# Environment & properties
+application-*.yml
+application-*.yaml
+application-*.properties
+.env
+*.key
+*.pem
