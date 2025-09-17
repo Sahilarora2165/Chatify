@@ -12,4 +12,11 @@ public class AuthResponseDTO {
     private String username;
 
     private String email;
+
+    public AuthResponseDTO(String token, String username) {
+        this.token = token;
+        this.username = username;
+    }
+
+    public AuthResponseDTO() {}
 }
