@@ -1,22 +1,15 @@
 package com.chatify.chat_backend.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuthResponseDTO {
-
     private String token;
-
-    private Long userId;
-
     private String username;
-
+    private Long userId;
     private String email;
-
-    public AuthResponseDTO(String token, String username) {
-        this.token = token;
-        this.username = username;
-    }
-
-    public AuthResponseDTO() {}
 }
