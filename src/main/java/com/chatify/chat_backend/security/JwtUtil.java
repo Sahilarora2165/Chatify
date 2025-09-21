@@ -87,6 +87,20 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
+
+    /**
+     * Validate token by checking signature and expiration only.
+     * @param token JWT string
+     * @return true if valid and not expired
+     */
+    public boolean validateToken(String token) {
+        try {
+            return !isTokenExpired(token);
+        } catch (JwtException | IllegalArgumentException ex) {
+            return false;
+        }
+    }
+
     /**
      * Validate token by checking signature, expiration, and matching subject.
      * @param token        JWT string
@@ -102,6 +116,8 @@ public class JwtUtil {
             return false;
         }
     }
+
+
 
     /** ----------- Internal helpers ----------- */
 
