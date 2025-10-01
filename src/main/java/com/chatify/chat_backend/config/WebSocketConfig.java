@@ -50,52 +50,33 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 
     @Override
-// Configure inbound messages from clients before reaching controllers
     public void configureClientInboundChannel(ChannelRegistration registration) {
-
-        // Intercept every incoming WebSocket/STOMP message
         registration.interceptors(new ChannelInterceptor() {
 
             @Override
-            // Called before a message is actually sent to the message channel
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
-
-                // Access STOMP headers and command from the message
                 StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(
                         message, StompHeaderAccessor.class);
 
-                // Handle authentication only on CONNECT command (initial handshake)
                 if (StompCommand.CONNECT.equals(accessor.getCommand())) {
-
-                    // Read the "Authorization" header (expects "Bearer <JWT>")
                     String authHeader = accessor.getFirstNativeHeader("Authorization");
 
                     if (authHeader != null && authHeader.startsWith("Bearer ")) {
-
-                        // Extract token from header
                         String token = authHeader.substring(7);
-
-                        // Extract email/username from token and validate it
                         String email = jwtUtil.extractUsername(token);
-                        if (email != null && jwtUtil.isTokenValid(token, email)) {
 
-                            // Create Spring Security Authentication object for this session
+                        if (email != null && jwtUtil.isTokenValid(token, email)) {
                             UsernamePasswordAuthenticationToken auth =
                                     new UsernamePasswordAuthenticationToken(email, null, null);
-
-                            // Set authenticated user in WebSocket session
                             accessor.setUser(auth);
-
-                            // Allow connection to proceed
                             return message;
                         }
                     }
 
-                    // Invalid or missing token → reject connection
-                    return null;
+                    // ⚠️ Reject connection if authentication fails
+                    throw new IllegalArgumentException("Invalid or missing authentication token");
                 }
 
-                // For other STOMP commands (SEND, SUBSCRIBE, etc.), allow message
                 return message;
             }
         });
