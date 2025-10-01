@@ -42,10 +42,9 @@ public class SecurityConfig {
 
                 // ✅ Configure authorization rules
                 .authorizeHttpRequests(authz -> authz
-                        // ✅ Public endpoints - anyone can access
-                        .requestMatchers("/api/auth/**").permitAll()
-                        // ✅ All other endpoints require authentication
-                        .anyRequest().authenticated()
+                        .requestMatchers("/ws/**", "/ws").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll() // Allow login/register
+                        .anyRequest().authenticated() // Require auth for others
                 )
 
                 // ✅ Stateless session management (no server-side sessions)
