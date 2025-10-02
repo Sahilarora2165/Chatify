@@ -76,10 +76,10 @@ public class AuthController {
             }
 
             // 4. Extract username from the VALIDATED token
-            String username = jwtUtil.extractUsername(token);
+            String email = jwtUtil.extractUsername(token);
 
             // 5. Call service to perform actual logout logic
-            authService.logout(username);
+            authService.logout(email);
 
             // 6. Return success response
             return ResponseEntity.ok("Logged out successfully");

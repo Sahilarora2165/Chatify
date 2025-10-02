@@ -31,11 +31,11 @@ public class CustomUserDetailsService implements UserDetailsService { // ✅ mus
 
         User user = userOpt.get();
 
-        // Return username as principle (for JWT)
+        // ✅ Return EMAIL as principal (to match JWT)
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
+                user.getEmail(),
                 user.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")) // single role
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
         );
     }
 }
